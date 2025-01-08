@@ -1,6 +1,6 @@
 class PostControlApi {
     static async createNewPost(jwtToken, userId, imageUrl, description) {
-        const apiUrl = `http://localhost:5000/api/post/createwithimg/${userId}`;
+        const apiUrl = `https://social-py-backend-production.up.railway.app/api/post/createwithimg/${userId}`;
 
         const headers = {
             "Authorization": `Bearer ${jwtToken}`,
@@ -32,7 +32,7 @@ class PostControlApi {
     }
 
     static async getAllPosts(jwtToken, userId) {
-        const apiUrl = `http://localhost:5000/api/post/all/${userId}`;
+        const apiUrl = `https://social-py-backend-production.up.railway.app/api/post/all/${userId}`;
 
         const headers = {
             "Authorization": `Bearer ${jwtToken}`,
@@ -57,7 +57,7 @@ class PostControlApi {
     }
 
     static async getAllPostsByUser(jwtToken, userId) {
-        const apiUrl = `http://localhost:5000/api/post/user/${userId}`;
+        const apiUrl = `https://social-py-backend-production.up.railway.app/api/post/user/${userId}`;
 
         const headers = {
             "Authorization": `Bearer ${jwtToken}`,
@@ -82,7 +82,7 @@ class PostControlApi {
     }
 
     static async getUserById(jwtToken, userId) {
-        const apiUrl = `http://localhost:5000/api/user/${userId}`;
+        const apiUrl = `https://social-py-backend-production.up.railway.app/api/user/${userId}`;
 
         const headers = {
             "Authorization": `Bearer ${jwtToken}`,
@@ -107,7 +107,7 @@ class PostControlApi {
     }
 
     static async likePost(jwtToken, userId, postId) {
-        const apiUrl = `http://localhost:5000/api/post/like/${postId}`;
+        const apiUrl = `https://social-py-backend-production.up.railway.app/api/post/like/${postId}`;
 
         const headers = {
             "Authorization": `Bearer ${jwtToken}`,
@@ -138,7 +138,7 @@ class PostControlApi {
     }
 
     static async followUser(jwtToken, userId, userTofollow) {
-        const apiUrl = `http://localhost:5000/api/user/follow/${userTofollow}`;
+        const apiUrl = `https://social-py-backend-production.up.railway.app/api/user/follow/${userTofollow}`;
 
         const headers = {
             "Authorization": `Bearer ${jwtToken}`,
@@ -169,7 +169,7 @@ class PostControlApi {
     }
 
     static async searchUser(jwtToken, query) {
-        const apiUrl = `http://localhost:5000/api/user/search/${query}`;
+        const apiUrl = `https://social-py-backend-production.up.railway.app/api/user/search/${query}`;
 
         const headers = {
             "Authorization": `Bearer ${jwtToken}`,

@@ -13,7 +13,7 @@ export default function MakerCard() {
             src="https://i.ibb.co/bXJ5661/41z-SGMSRSL-UXNa-N-FMjpg-QL85.jpg"
           />
           <div className="flex flex-col gap-1 items-start justify-center">
-            <h4 className="text-small font-semibold leading-none text-default-600">Shibam Naskar</h4>
+            <a href="profile/6759337739a8ffdfdc351daf" ><h4 className="text-small font-semibold leading-none text-default-600">Shibam Naskar</h4></a>
             <h5 className="text-small tracking-tight text-default-400">shibam-naskar</h5>
           </div>
         </div>

@@ -13,6 +13,7 @@ import LoginPage from './pages/login';
 import authService from './api-helpers/api';
 import { useNavigate } from "react-router-dom";
 import HomePageComponent from './pages/homepage';
+import { ToastContainer, toast } from 'react-toastify';
 
 function App() {
   const [count, setCount] = useState(0);
@@ -32,11 +33,13 @@ function App() {
       <div
         style={{
           minHeight: '100vh',
-          background: 'linear-gradient(to right, #2F065E, #010C1E)',
+          background: "#242425",
+          // background: 'linear-gradient(to right, #2F065E, #010C1E)',
         }}
       >
         {/* Conditionally render Navbar */}
         <ConditionalNavbar />
+        <ToastContainer/>
         <div style={{ height: 10 }}></div>
 
         {/* Define Routes */}

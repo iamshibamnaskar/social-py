@@ -18,7 +18,7 @@ export default function NewPostCard({afterPost}) {
     const [uploadedImageUrl, setUploadedImageUrl] = useState("");
     const [isLoading, setIsLoading] = useState(false);
 
-    const IMGBB_API_KEY = ""; // Replace with your ImgBB API Key
+    const IMGBB_API_KEY = "cbc37b1145d67b711e5697a34fc7f76d"; // Replace with your ImgBB API Key
     const jwtToken = Cookies.get("socialpiloginjwt"); // Retrieve JWT token from cookie
     const userId = Cookies.get("socialpiloginid"); // Retrieve user ID from cookie
 

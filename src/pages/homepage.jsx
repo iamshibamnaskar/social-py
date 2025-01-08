@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import authService from "../api-helpers/api";
 import Cookies from "js-cookie";
 import PostControlApi from "../api-helpers/postapi";
+import {CircularProgress} from "@nextui-org/react";
 
 export default function HomePageComponent() {
     const navigate = useNavigate();
@@ -76,7 +77,7 @@ export default function HomePageComponent() {
                         <PostCardComponent key={index} post={post} afterLike={fetchPostAfterLike} />
                     ))
                 ) : (
-                    <p>No posts available</p>
+                <CircularProgress size="xl" color="secondary" />
                 )}
             </div>
             <div style={{ flex: 1 }}>

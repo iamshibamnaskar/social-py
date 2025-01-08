@@ -52,10 +52,16 @@ export default function NavbarComponent() {
 
     }
   }, []);
+
+  const logout = () => {
+    Cookies.remove('socialpiloginjwt');
+    Cookies.remove('socialpiloginid');
+    window.location.reload()
+  }
   return (
     <Navbar>
       <NavbarBrand onClick={()=>{navigate('/')}}>
-        <AcmeLogo />
+        <img src="https://i.ibb.co/fGPsqpP/removal-ai-30429249-7b84-4b0e-a266-5f9cdefeb8d0-screenshot-2-E9-K1-VD.png" className="w-10 h-10" style={{marginRight:"20px"}} />
         <p className="font-bold text-inherit">Social-py</p>
       </NavbarBrand>
 
@@ -80,7 +86,7 @@ export default function NavbarComponent() {
               <p className="font-semibold">{userdata['email']}</p>
             </DropdownItem>
             <DropdownItem key="settings" onClick={()=>{navigate(`/profile/${userdata['_id']}`)}} >My Prifile</DropdownItem>
-            <DropdownItem key="logout" color="danger">
+            <DropdownItem key="logout" color="danger" onClick={logout}>
               Log Out
             </DropdownItem>
           </DropdownMenu>

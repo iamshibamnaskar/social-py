@@ -1,7 +1,8 @@
 import React from "react";
-import { Form, Input, Checkbox, Button } from "@nextui-org/react";
+import { Form, Input, Checkbox, Button, Card } from "@nextui-org/react";
 import authService from "../api-helpers/api";
 import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from 'react-toastify';
 
 export default function SignupPage() {
   const [password, setPassword] = React.useState("");
@@ -12,9 +13,11 @@ export default function SignupPage() {
   const [fullName, setFullName] = React.useState("");
   const [profilePicture, setProfilePicture] = React.useState(null);
   const [profilePictureUrl, setProfilePictureUrl] = React.useState("");
+  const [loading, setLoading] = React.useState(false);
+
   const navigate = useNavigate();
 
-  const IMGBB_API_KEY = ""; // Replace with your ImgBB API Key
+  const IMGBB_API_KEY = "cbc37b1145d67b711e5697a34fc7f76d"; // Replace with your ImgBB API Key
 
   const getPasswordError = (value) => {
     if (value.length < 4) {
@@ -50,6 +53,7 @@ export default function SignupPage() {
       }
 
       const result = await response.json();
+      console.log(result.data.url);
       return result.data.url; // Live URL of the uploaded image
     } catch (error) {
       console.error("Error uploading image:", error);
@@ -59,6 +63,7 @@ export default function SignupPage() {
 
   const onSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
 
     const data = Object.fromEntries(new FormData(e.currentTarget));
 
@@ -109,125 +114,129 @@ export default function SignupPage() {
       const response = await authService.register(formData);
       setSubmitted(response);
       console.log("Registration successful:", response);
+      setLoading(false);
+      toast.success("Registration successful!");
+      navigate('/login')
     } catch (error) {
+      setLoading(false);
+      toast.error("Registration failed. Please check your inputs.");
       console.error("Registration failed:", error);
     }
   };
 
   return (
-    <Form
-      className="w-full justify-center items-center space-y-4"
-      validationBehavior="native"
-      validationErrors={errors}
-      onReset={() => setSubmitted(null)}
-      onSubmit={onSubmit}
-      style={{marginTop:30}}
-    >
-      <div className="flex flex-col gap-4 max-w-md">
-        {/* Full Name Input */}
-        <Input
-          isRequired
-          errorMessage={errors.fullName}
-          label="Full Name"
-          labelPlacement="outside"
-          name="fullName"
-          placeholder="Enter your full name"
-          onValueChange={setFullName}
-          value={fullName}
-        />
-
-        {/* Email Input */}
-        <Input
-          isRequired
-          errorMessage={({ validationDetails }) => {
-            if (validationDetails.valueMissing) {
-              return "Please enter your email";
-            }
-            if (validationDetails.typeMismatch) {
-              return "Please enter a valid email address";
-            }
-          }}
-          label="Email"
-          labelPlacement="outside"
-          name="email"
-          placeholder="Enter your email"
-          type="email"
-          value={email}
-          onValueChange={handleEmailChange}
-        />
-
-        {/* Username Input */}
-        <Input
-          isReadOnly
-          label="Username"
-          labelPlacement="outside"
-          name="username"
-          value={username}
-          placeholder="Auto-filled from email"
-        />
-
-        {/* Password Input */}
-        <Input
-          isRequired
-          errorMessage={getPasswordError(password)}
-          isInvalid={getPasswordError(password) !== null}
-          label="Password"
-          labelPlacement="outside"
-          name="password"
-          placeholder="Enter your password"
-          type="password"
-          value={password}
-          onValueChange={setPassword}
-        />
-
-        {/* Profile Picture Upload */}
-        <Input
-          type="file"
-          label="Profile Picture"
-          labelPlacement="outside"
-          name="profilePicture"
-          onChange={(e) => setProfilePicture(e.target.files[0])}
-        />
-
-        {/* Terms and Conditions */}
-        <Checkbox
-          isRequired
-          isInvalid={!!errors.terms}
-          name="terms"
-          validationBehavior="aria"
-          value="true"
-          onValueChange={() => setErrors((prev) => ({ ...prev, terms: undefined }))}
-        >
-          I agree to the terms and conditions
-        </Checkbox>
-
-        {errors.terms && <span className="text-danger text-small">{errors.terms}</span>}
-
-        {/* Buttons */}
-        <div className="flex gap-4">
-          <Button className="w-full" color="primary" type="submit">
-            Submit
-          </Button>
-          <Button type="reset" variant="bordered">
-            Reset
-          </Button>
+    <Card className="flex flex-row w-full h-auto mx-auto" style={{width: 800, height: 630}}>
+    {/* Left Side - Image */}
+    <div className="flex  w-1/2 bg-cover bg-center" style={{height:"100vh"}} >
+         <img src="https://i.ibb.co/WvbPnPM/Screenshot-from-2025-01-08-02-02-35-1.png"/>
+      {/* Optionally add an overlay or text here */}
+    </div>
+  
+    {/* Right Side - Form */}
+    <div className="flex flex-col items-center justify-center w-1/2 p-8">
+      <Form
+        className="w-full justify-center items-center space-y-4"
+        validationBehavior="native"
+        validationErrors={errors}
+        onReset={() => setSubmitted(null)}
+        onSubmit={onSubmit}
+        style={{ marginTop: 30 }}
+      >
+        <div className="flex flex-col gap-4 max-w-md">
+          {/* Full Name Input */}
+          <Input
+            isRequired
+            errorMessage={errors.fullName}
+            label="Full Name"
+            labelPlacement="outside"
+            name="fullName"
+            placeholder="Enter your full name"
+            onValueChange={setFullName}
+            value={fullName}
+          />
+  
+          {/* Email Input */}
+          <Input
+            isRequired
+            errorMessage={({ validationDetails }) => {
+              if (validationDetails.valueMissing) {
+                return "Please enter your email";
+              }
+              if (validationDetails.typeMismatch) {
+                return "Please enter a valid email address";
+              }
+            }}
+            label="Email"
+            labelPlacement="outside"
+            name="email"
+            placeholder="Enter your email"
+            type="email"
+            value={email}
+            onValueChange={handleEmailChange}
+          />
+  
+          {/* Username Input */}
+          <Input
+            isReadOnly
+            label="Username"
+            labelPlacement="outside"
+            name="username"
+            value={username}
+            placeholder="Auto-filled from email"
+          />
+  
+          {/* Password Input */}
+          <Input
+            isRequired
+            errorMessage={getPasswordError(password)}
+            isInvalid={getPasswordError(password) !== null}
+            label="Password"
+            labelPlacement="outside"
+            name="password"
+            placeholder="Enter your password"
+            type="password"
+            value={password}
+            onValueChange={setPassword}
+          />
+  
+          {/* Profile Picture Upload */}
+          <Input
+            type="file"
+            label="Profile Picture"
+            labelPlacement="outside"
+            name="profilePicture"
+            onChange={(e) => setProfilePicture(e.target.files[0])}
+          />
+  
+          {/* Terms and Conditions */}
+          <Checkbox
+            isRequired
+            isInvalid={!!errors.terms}
+            name="terms"
+            validationBehavior="aria"
+            value="true"
+            onValueChange={() => setErrors((prev) => ({ ...prev, terms: undefined }))}
+          >
+            I agree to the terms and conditions
+          </Checkbox>
+  
+          {errors.terms && <span className="text-danger text-small">{errors.terms}</span>}
+  
+          {/* Buttons */}
+          <div className="flex gap-4">
+            <Button className="w-full" color="primary" type="submit">
+              {loading ? "Registering..." : "Register"}
+            </Button>
+            <Button type="reset" variant="bordered">
+              Reset
+            </Button>
+          </div>
         </div>
-      </div>
-
-      <p style={{marginLeft:180}} onClick={()=>{navigate('/login')}}>login</p>
-
-      {/* Submitted Data Display */}
-      {submitted && (
-        <div className="text-small text-default-500 mt-4">
-          Submitted data: <pre>{JSON.stringify(submitted, null, 2)}</pre>
-        </div>
-      )}
-
-      {profilePictureUrl && (
-        <div className="text-small text-success mt-4">
-          Uploaded Image URL: <a href={profilePictureUrl} target="_blank" rel="noopener noreferrer">{profilePictureUrl}</a>
-        </div>
-      )}
-    </Form>
+  
+        <p style={{ cursor: "pointer", textAlign: "center" }} onClick={() => { navigate('/login') }}>login</p>
+      </Form>
+    </div>
+  </Card>
+  
   );
 }

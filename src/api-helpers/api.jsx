@@ -42,7 +42,7 @@ class AuthService {
   }
   
   // Create a single instance of the service
-  const authService = new AuthService("http://localhost:5000");
+  const authService = new AuthService("https://social-py-backend-production.up.railway.app");
   
   export default authService;
   
